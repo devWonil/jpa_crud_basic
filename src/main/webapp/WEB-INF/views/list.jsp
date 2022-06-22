@@ -3,6 +3,7 @@
 
 <main class = "container">
 	<h2>테스트 코드</h2>
+	<!-- board.content == List<Board> -->
 	<c:forEach var="board"  items="${boards.content}">
 			<div class = "card col-md-12 m-2">
 			<div class="card-body">
