@@ -30,7 +30,7 @@ public class BoardService {
 	@Transactional
 	public Board 글상세보기(int id) {
 		
-		Board board = boardRepository.findById(id).orElseThrow(() -> {
+		Board board = boardRepository.mFindById(id).orElseThrow(() -> {
 			return new RuntimeException("해당글은 삭제되었습니다");
 		});
 		
@@ -38,5 +38,26 @@ public class BoardService {
 		board.setReadCount(board.getReadCount() + 1);
 		
 		return board;
+	}
+	
+	@Transactional
+	public void 글수정하기(int id, BoardSaveRequestDto dto) {
+		// 가져오기
+		Board boardEntity = boardRepository.findById(id).orElseThrow(() -> {
+			return new RuntimeException("해당글은 없는 데이터입니다");
+		});
+		
+		boardEntity.setTitle(dto.getTitle());
+		boardEntity.setContent(dto.getContent());
+		
+		//boardRepository.save(boardEntity);
+		// 트랜잭션 처리 --> 글수정하기() 메서드가 종료되는 시점에 더티체킹 발생
+	}
+	
+	@Transactional
+	public int 글삭제하기(int id) {
+		//boardRepository.deleteById(id);
+		return boardRepository.mDeleteById(id);
+		
 	}
 }

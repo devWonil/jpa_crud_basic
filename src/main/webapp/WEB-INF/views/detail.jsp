@@ -3,8 +3,8 @@
 
 <main class = "container">
 
-	<a class="btn btn-warning">수정</a>
-	<button type="button" class="btn btn-warning">삭제</button>
+	<a class="btn btn-warning" href="/updateForm/${board.id}">수정</a>
+	<button type="button" onclick="deleteBoard(${board.id})" class="btn btn-danger">삭제</button>
 	<br/>
 	<br/>
 	
@@ -18,6 +18,23 @@
 	<div class="form-group">
 			<div class="m-2">${board.content}</div>
 	</div>
-
+	<hr/>
 </main>
+<script>
+		function deleteBoard(id){
+			
+			fetch("/board/" + id, {
+				method: "delete"
+			})
+			.then(res => res.text())
+			.then(res => {
+					if(res == "true"){
+						alert("삭제 성공");
+						location.href = "/";
+					} else {
+						alert("삭제 실패");
+					}
+			});
+		}
+</script>
 <%@ include file="layout/footer.jsp" %>
